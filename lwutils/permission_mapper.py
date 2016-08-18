@@ -1,0 +1,21 @@
+permissions = {
+    "admin": ["admin"],
+    "edgewize": ["edgewize"],
+    "surfwize": ["surfwize"],
+    "stats": ["read_device_statistics", "read_device_state"],
+    "general": ["read_device_authentication", "write_device_authentication",
+                "read_device_configuration", "write_device_configuration",
+                "read_device_userdb", "read_device_periods",
+                "read_device_aliases",
+                ],
+    "network": ["read_device_networking", "write_device_networking"],
+    "layer7": ["read_device_layer7", "write_device_layer7",
+               "read_device_userdb", "read_device_periods",
+               "read_device_aliases", "read_device_networking"],
+    "firewall": ["read_device_filtering", "write_device_filtering",
+                 "write_device_nat", "read_device_nat",
+                 "read_device_qos", "write_device_qos",
+                 "read_device_userdb", "read_device_periods",
+                 "read_device_aliases", "read_device_networking"],
+    "users": ["read_device_userdb", "write_device_userdb", "read_device_state"]
+}
