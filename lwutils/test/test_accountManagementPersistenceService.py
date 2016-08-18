@@ -1,8 +1,8 @@
 import json
 from unittest import TestCase
 import httpretty
-from libs.common_model import CloudDevice, CloudUser
-from libs.accountmanagementservice_client import AccountManagementPersistenceService
+from lwutils.common_model import CloudDevice, CloudUser
+from lwutils.accountmanagementservice_client import AccountManagementPersistenceService
 
 __author__ = 'Cody Harrington'
 __email__ = 'cody.harrington@linewize.com'
