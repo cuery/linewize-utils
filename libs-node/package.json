@@ -1,0 +1,33 @@
+{
+    "name": "libs-node",
+    "description": "Common stuff for our fancy node apps",
+    "author": "Thorsten Castor <t.j.castor@gmail.com>",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "test": "grunt mochaTest"
+    },
+    "directories": {
+        "config": "./config",
+        "test": "./test"
+    },
+    "dependencies": {
+        "request": "2.x",
+        "async": "0.x",
+        "config": "0.x",
+        "bunyan": "0.x",
+        "chai": "1.x",
+        "mocha": "1.x",
+        "supertest": "0.x",
+        "grunt": "0.4.x",
+        "grunt-contrib-jshint": "0.x",
+        "grunt-contrib-nodeunit": "0.x",
+        "grunt-contrib-uglify": "0.x",
+        "grunt-mocha-test": "0.x",
+        "grunt-env": "0.x",
+        "node-uuid": "1.x"
+    },
+    "engines": {
+        "node": ">=0.10"
+    }
+}
