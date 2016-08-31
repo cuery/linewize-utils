@@ -1,10 +1,10 @@
 from datetime import datetime
 import json
 import requests
-from lwutils.sphirewall_connection import ApiDispatcherTransportProvider
+from libs.sphirewall_connection import ApiDispatcherTransportProvider
 from sphirewallapi.sphirewall_api import SphirewallClient
-from lwutils.authorization_utils import authorize_header
-from lwutils.error_handler import error_handled_response
+from libs.authorization_utils import authorize_header
+from libs.error_handler import error_handled_response
 
 
 class DevicePermissionException(Exception):
@@ -134,7 +134,7 @@ class LinewizeApiClient(object):
 
     def analytics_query(self, url, filter_user=None, filter_group=None, filter_period=None, filter_category=None, filter_mac=None,
                         filter_ip=None, startDate=None, endDate=None, startTime=None, endTime=None, limit=None, offset=None, search=None, event=None,
-                        include_noise=None, include_blocked_flag=False, _device_id=None, period=None):
+                        include_noise=None, include_blocked_flag=False, _device_id=None, period=None, interval_start=None, interval_end=None):
         headers = authorize_header(self._application_key_id, self._application_key_secret)
         params = {}
         if startDate is not None:
@@ -171,6 +171,10 @@ class LinewizeApiClient(object):
             params['include_blocked_flag'] = include_blocked_flag
         if period is not None:
             params['period'] = period
+        if interval_start is not None:
+            params['interval_start'] = interval_start
+        if interval_end is not None:
+            params['interval_end'] = interval_end
 
         params["access_token"] = self._session_token
         params["deviceid"] = _device_id

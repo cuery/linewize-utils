@@ -99,12 +99,20 @@ class DateHelper:
         return datetime.now(DateHelper._find_timezone(tz)).strftime("%Y-%m-%d")
 
     @staticmethod
+    def formated_today_time(tz=None):
+        return datetime.now(DateHelper._find_timezone(tz)).replace(hour=23, minute=59).strftime("%Y-%m-%d %H:%M")
+
+    @staticmethod
     def formated_six_days_ago(tz=None):
         """
             returns six days ago as a formated string
             e.g. '2014-05-22'
         """
         return (datetime.now(DateHelper._find_timezone(tz)) - timedelta(days=6)).strftime("%Y-%m-%d")
+
+    @staticmethod
+    def formated_six_days_ago_time(tz=None):
+        return (datetime.now(DateHelper._find_timezone(tz)) - timedelta(days=6)).replace(hour=0, minute=0).strftime("%Y-%m-%d %H:%M")
 
     @staticmethod
     def iso_week_number_for_date(date):
@@ -148,6 +156,10 @@ class DateHelper:
     @staticmethod
     def enumerate_date_range(start_date, end_date):
         ret = []
+        if len(start_date) > 10:
+            start_date = start_date[0:10]
+        if len(end_date) > 10:
+            end_date = end_date[0:10]
         ret.append(start_date)
         start_date_obj = datetime.strptime(start_date, "%Y-%m-%d")
         end_date_obj = datetime.strptime(end_date, "%Y-%m-%d")
