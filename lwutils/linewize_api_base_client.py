@@ -1,10 +1,10 @@
 from datetime import datetime
 import json
 import requests
-from libs.sphirewall_connection import ApiDispatcherTransportProvider
+from lwutils.sphirewall_connection import ApiDispatcherTransportProvider
 from sphirewallapi.sphirewall_api import SphirewallClient
-from libs.authorization_utils import authorize_header
-from libs.error_handler import error_handled_response
+from lwutils.authorization_utils import authorize_header
+from lwutils.error_handler import error_handled_response
 
 
 class DevicePermissionException(Exception):
