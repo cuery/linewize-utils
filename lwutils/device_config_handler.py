@@ -10,7 +10,7 @@ class DeviceConfigHandler():
         self.logger = logging.getLogger(__name__)
         self.config = config
         self.devices = devices
-        self.erouter_client = ERouterClient(self.config["EROUTER_SERVICE_URL"])
+        self.erouter_client = ERouterClient(self.config.get("EROUTER_SERVICE_URL"))
         self.application_name = applicaction_name
         if engage:
             self.engage()
