@@ -4,9 +4,9 @@ import boto3
 class Resource(object):
 
     def __init__(self, config):
-        self.aws_access_key_id = config["AWS_ACCESS_KEY_ID"]
-        self.aws_secret_access_key = config["AWS_SECRET_ACCESS_KEY"]
-        self.region_name = config["AWS_REGION"]
+        self.aws_access_key_id = config.get("AWS_ACCESS_KEY_ID")
+        self.aws_secret_access_key = config.get("AWS_SECRET_ACCESS_KEY")
+        self.region_name = config.get("AWS_REGION")
 
     def _resource(self, service_name, region_name=None, **kwargs):
         session = boto3.session.Session()
