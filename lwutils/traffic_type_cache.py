@@ -47,6 +47,10 @@ class TrafficTypeCache(object):
         self._reload_cache()
         return self.signature_cache
 
+    def get_normalized_signatures(self):
+        self._reload_cache()
+        return self.signature_cache.itervalues()
+
 
     def get_all_fingerprints(self):
         self._reload_cache()
