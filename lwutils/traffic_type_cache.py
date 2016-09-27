@@ -58,6 +58,13 @@ class TrafficTypeCache(object):
         self._reload_cache()
         return self.fingerprint_cache
 
+    def get_normalized_fingerprints(self):
+        self._reload_cache()
+        ret = []
+        for item in self.fingerprint_cache.itervalues():
+            ret.append(item)
+        return ret
+
     def get_signature(self, signature_id):
         self._reload_cache()
         direct_hit_sig = self.signature_cache.get(signature_id)
