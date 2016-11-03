@@ -3,7 +3,9 @@ class CloudUser:
     email = ""
     password = ""
     support_admin = False
-    attributes = ["customerid", "email", "password", "support_admin"]
+    phone_number = ""
+    enabled = True
+    attributes = ["customerid", "email", "password", "support_admin", "phone_number", "enabled"]
 
     def __init__(self, customerid=None, email=None, password=None, enabled=True):
         self.customerid = customerid
