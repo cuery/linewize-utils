@@ -5,13 +5,15 @@ class CloudUser:
     support_admin = False
     phone_number = ""
     enabled = True
-    attributes = ["customerid", "email", "password", "support_admin", "phone_number", "enabled"]
+    attributes = ["customerid", "email", "password", "support_admin", "phone_number", "enabled", "two_factor"]
 
-    def __init__(self, customerid=None, email=None, password=None, enabled=True):
+    def __init__(self, customerid=None, email=None, password=None, enabled=True, phone_number=None, two_factor=False):
         self.customerid = customerid
         self.email = email
         self.password = password
         self.enabled = enabled
+        self.phone_number = phone_number
+        self.two_factor = two_factor
 
     def is_authenticated(self):
         return True
