@@ -514,5 +514,5 @@ class AccountManagementPersistenceService():
 
     @staticmethod
     def get_all_msps(service_url):
-        response = AccountManagementPersistenceService.__post_json("{}/msps".format(service_url))
+        response = AccountManagementPersistenceService.__get_json("{}/msps".format(service_url))
         return response["result"]
