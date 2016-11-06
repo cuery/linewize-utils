@@ -3,7 +3,8 @@ class CloudUser:
     email = ""
     password = ""
     support_admin = False
-    attributes = ["customerid", "email", "password", "support_admin"]
+    msp = ""
+    attributes = ["customerid", "email", "password", "support_admin", "msp"]
 
     def __init__(self, customerid=None, email=None, password=None, enabled=True):
         self.customerid = customerid
@@ -68,19 +69,21 @@ class CloudDevice:
     invoice_number = 0
     install_date = None
     classroom_exceptions = None
-    classroom_allow_owner_access=False
-    classroom_restrict_global_teachers=False
+    classroom_allow_owner_access = False
+    classroom_restrict_global_teachers = False
     allow_public_source_ip = False
     failover_active = False
     stats_active = True
     inventory = None
-    update_allow_auto=None
-    update_branch=None
-    last_maintenance=False
-    classroom_groups_group_prefix=None
-    last_status_offline_time=0
-    last_status_offline_notified=False
-    watchdog_recipients=[]
+    update_allow_auto = None
+    update_branch = None
+    last_maintenance = False
+    classroom_groups_group_prefix = None
+    last_status_offline_time = 0
+    last_status_offline_notified = False
+    watchdog_recipients = []
+    xero_id = None
+    msp = None
 
     # If you add an attribute to this class, MAKE SURE YOU ADD IT TO THIS LIST
     attributes = ["deviceid", "description", "user_defined_name",
@@ -93,7 +96,7 @@ class CloudDevice:
                   "allow_public_source_ip", "failover_active", "stats_active", "classroom_allow_owner_access",
                   "classroom_restrict_global_teachers", "inventory", "update_allow_auto",
                   "update_branch", "last_maintenance", "classroom_groups_group_prefix", "last_status_offline_time", "last_status_offline_notified",
-                  "watchdog_recipients"]
+                  "watchdog_recipients", "xero_id", "msp"]
 
     def __init__(self, deviceid=None, description=""):
         self.deviceid = deviceid
