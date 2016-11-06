@@ -496,17 +496,23 @@ class AccountManagementPersistenceService():
 
     @staticmethod
     def get_user_object(service_url, deviceid, username):
-        response = AccountManagementPersistenceService.__get_json("{}/device/{}/configuration/authentication/users/username/{}".format(service_url, deviceid, username))
+        response = AccountManagementPersistenceService.__get_json(
+            "{}/device/{}/configuration/authentication/users/username/{}".format(service_url, deviceid, username))
         return response["result"]
-
 
     @staticmethod
     def set_user_object(service_url, deviceid, user_object):
-        response = AccountManagementPersistenceService.__post_json("{}/device/{}/configuration/authentication/users".format(service_url, deviceid), data=user_object)
+        response = AccountManagementPersistenceService.__post_json(
+            "{}/device/{}/configuration/authentication/users".format(service_url, deviceid), data=user_object)
         return response["result"]
-
 
     @staticmethod
     def set_captiveportal(service_url, deviceid, cp_object):
-        response = AccountManagementPersistenceService.__post_json("{}/device/{}/configuration/authentication/captiveportal".format(service_url, deviceid), data=cp_object)
+        response = AccountManagementPersistenceService.__post_json(
+            "{}/device/{}/configuration/authentication/captiveportal".format(service_url, deviceid), data=cp_object)
+        return response["result"]
+
+    @staticmethod
+    def get_all_msps(service_url):
+        response = AccountManagementPersistenceService.__post_json("{}/msps".format(service_url))
         return response["result"]
