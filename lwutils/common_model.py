@@ -3,7 +3,7 @@ class CloudUser:
     email = ""
     password = ""
     support_admin = False
-    msp = ""
+    msp = None
     attributes = ["customerid", "email", "password", "support_admin", "msp"]
 
     def __init__(self, customerid=None, email=None, password=None, enabled=True):
