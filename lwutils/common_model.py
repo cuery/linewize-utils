@@ -143,3 +143,36 @@ class CloudMyLinewizeUserGroupMapping:
             if hasattr(self, attribute):
                 obj_rep[attribute] = getattr(self, attribute)
         return obj_rep
+
+
+class CloudDeviceStats:
+
+    deviceid = None
+    last_status = False
+    last_version = None
+    last_os_version = None
+    last_online_timestamp = 0
+    last_uptime = 0
+    last_maintenance = False
+    last_status_offline_time = 0
+    last_status_offline_notified = False
+    attributes = ["deviceid", "last_status", "last_version", "last_os_version",
+                  "last_online_timestamp", "last_uptime", "last_maintenance",
+                  "last_status_offline_time", "last_status_offline_notified"]
+
+    def __init__(self, deviceid=None):
+        self.deviceid = deviceid
+
+    def load_attributes_from_dict(self, dict_obj):
+        if dict_obj:
+            for (key, val) in dict_obj.items():
+                setattr(self, key, val)
+                if key not in self.attributes:
+                    self.attributes.append(key)
+
+    def to_dict(self):
+        obj_rep = {}
+        for attribute in self.attributes:
+            if hasattr(self, attribute):
+                obj_rep[attribute] = getattr(self, attribute)
+        return obj_rep
