@@ -1,5 +1,5 @@
 import time
-from lwutils.common_model import CloudUser, CloudDevice
+from lwutils.common_model import CloudUser, CloudDevice, CloudDeviceStats
 import requests
 import json
 from error_handler import error_handled_response
@@ -114,6 +114,13 @@ class AccountManagementPersistenceService():
             dev.load_attributes_from_dict(device_dict)
             devices.append(dev)
         return devices
+
+    @staticmethod
+    def get_device_stats(service_url, deviceid):
+        response = AccountManagementPersistenceService.__get_json("{}/device/{}/stats".format(service_url, deviceid))
+        dev_stats = CloudDeviceStats()
+        dev_stats.load_attributes_from_dict(response["result"])
+        return dev_stats
 
     @staticmethod
     def get_all_reportrecipients(service_url):
