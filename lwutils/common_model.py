@@ -46,10 +46,7 @@ class CloudDevice:
     routed_network = True
     timezone = None
     monitored = False
-    last_status = False
     last_version = None
-    last_os_version = None
-    last_online_timestamp = 0
     edgewize = False
     surfwize = False
     report_emails = None
@@ -59,7 +56,6 @@ class CloudDevice:
     mylinewize_login = None
     beta_tester = False
     paid_subscription = False
-    last_uptime = 0
     reseller = None
     hardware = None
     customer_type = None
@@ -77,10 +73,7 @@ class CloudDevice:
     inventory = None
     update_allow_auto = None
     update_branch = None
-    last_maintenance = False
     classroom_groups_group_prefix = None
-    last_status_offline_time = 0
-    last_status_offline_notified = False
     watchdog_recipients = []
     xero_id = None
     msp = None
@@ -88,14 +81,14 @@ class CloudDevice:
     # If you add an attribute to this class, MAKE SURE YOU ADD IT TO THIS LIST
     attributes = ["deviceid", "description", "user_defined_name",
                   "routed_network", "timezone",
-                  "key", "monitored", "last_status",
+                  "key", "monitored",
                   "last_version", "edgewize", "surfwize", "report_emails", "labels",
                   "white_label_file_name", "classroom_groups", "classroom_exceptions", "mylinewize_login", "beta_tester",
-                  "paid_subscription", "last_os_version", "last_online_timestamp", "last_uptime", "reseller", "hardware",
+                  "paid_subscription", "reseller", "hardware",
                   "customer_type", "education_institute_number", "deal_url", "active", "invoice_number", "install_date",
                   "allow_public_source_ip", "failover_active", "stats_active", "classroom_allow_owner_access",
                   "classroom_restrict_global_teachers", "inventory", "update_allow_auto",
-                  "update_branch", "last_maintenance", "classroom_groups_group_prefix", "last_status_offline_time", "last_status_offline_notified",
+                  "update_branch", "classroom_groups_group_prefix",
                   "watchdog_recipients", "xero_id", "msp"]
 
     def __init__(self, deviceid=None, description=""):
