@@ -5,8 +5,8 @@ class CloudUser:
     support_admin = False
     phone_number = ""
     enabled = True
-	msp = None
-	two_factor = False
+    msp = None
+    two_factor = False
     attributes = ["customerid", "email", "password", "support_admin", "phone_number", "enabled", "two_factor", "msp"]
 
     def __init__(self, customerid=None, email=None, password=None, enabled=True, phone_number=None, two_factor=False):
