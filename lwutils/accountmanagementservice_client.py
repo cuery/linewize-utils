@@ -1,5 +1,5 @@
 import time
-from lwutils.common_model import CloudUser, CloudDevice
+from lwutils.common_model import CloudUser, CloudDevice, CloudDeviceStats
 import requests
 import json
 from error_handler import error_handled_response
@@ -116,6 +116,23 @@ class AccountManagementPersistenceService():
         return devices
 
     @staticmethod
+    def get_all_devices_stats(service_url):
+        response = AccountManagementPersistenceService.__get_json("{}/devices/stats".format(service_url))
+        devices = []
+        for device_stats_dict in response["result"]:
+            dev = CloudDeviceStats()
+            dev.load_attributes_from_dict(device_stats_dict)
+            devices.append(dev)
+        return devices
+
+    @staticmethod
+    def get_device_stats(service_url, deviceid):
+        response = AccountManagementPersistenceService.__get_json("{}/device/{}/stats".format(service_url, deviceid))
+        dev_stats = CloudDeviceStats()
+        dev_stats.load_attributes_from_dict(response["result"])
+        return dev_stats
+
+    @staticmethod
     def get_all_reportrecipients(service_url):
         response = AccountManagementPersistenceService.__get_json("{}/reportrecipients".format(service_url))
         return response["result"]
@@ -220,6 +237,13 @@ class AccountManagementPersistenceService():
         data = cloud_device.to_dict()
         response = AccountManagementPersistenceService.__post_json(
             "{}/device/{}/no_notification".format(service_url, cloud_device.deviceid), data=data, device_id=cloud_device.deviceid)
+        return True
+
+    @staticmethod
+    def update_existing_device_stats(service_url, device_stats):
+        data = device_stats.to_dict()
+        AccountManagementPersistenceService.__post_json(
+            "{}/device/{}/stats/no_notification".format(service_url, device_stats.deviceid), data=data, device_id=device_stats.deviceid)
         return True
 
     @staticmethod
