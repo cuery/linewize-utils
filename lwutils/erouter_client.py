@@ -30,10 +30,10 @@ class ERouterClient:
             except Exception as e:
                 print 'Error during callback for event %s and subscription %s. Error: %s' % (topic_name, subscription_name, e)
 
-    def subscribe(self, topic_name, subscription_name, callback=None):
-        subscription_name += "_" + str(uuid4())  # make subscription name unique for scaling
+    def subscribe(self, topic_name, subscription_name, callback=None, worker_mode=False):
+        if not worker_mode:
+            subscription_name += "_" + str(uuid4())  # make subscription name unique for scaling
         requests.post("%s/topic/%s/%s/subscribe" % (self.url, topic_name, subscription_name))
-
         if callback:
             t = Thread(target=self._poll, args=(topic_name, subscription_name, callback,))
             t.daemon = True
