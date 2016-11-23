@@ -56,7 +56,8 @@ class DeviceHandlerTestCase(unittest.TestCase):
             "update_allow_auto": True,
             "update_branch": "stable",
             "classroom_groups_group_prefix": None,
-            "classroom_restrict_global_teachers": False
+            "classroom_restrict_global_teachers": False,
+            "classwize_reliever_enabled": False
         }
         httpretty.register_uri(
             httpretty.GET, uri="http://service/device/testdevice1", body=json.dumps(dict(result=device)))
@@ -110,7 +111,8 @@ class DeviceHandlerTestCase(unittest.TestCase):
             "update_allow_auto": True,
             "update_branch": "stable",
             "classroom_groups_group_prefix": None,
-            "classroom_restrict_global_teachers": False
+            "classroom_restrict_global_teachers": False,
+            "classwize_reliever_enabled": False
         }
 
         device2 = {
@@ -148,7 +150,8 @@ class DeviceHandlerTestCase(unittest.TestCase):
             "update_allow_auto": True,
             "update_branch": "stable",
             "classroom_groups_group_prefix": None,
-            "classroom_restrict_global_teachers": False
+            "classroom_restrict_global_teachers": False,
+            "classwize_reliever_enabled": False
         }
 
         devices = [device1, device2]
