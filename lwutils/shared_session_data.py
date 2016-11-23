@@ -4,6 +4,7 @@ SESSION_SPHIREWALL_USER_NAME = "username"
 SESSION_SPHIREWALL_MAC = "mac"
 SESSION_SPHIREWALL_IP = "ip"
 SESSION_CLASSROOM_MANAGER_GROUP = "group"
+SESSION_CLASSROOM_MANAGER_RELIEVE = "relieve"
 
 
 def session_get_token(flask_session_dict):
@@ -52,3 +53,11 @@ def session_get_classroom_manager_group(flask_session_dict):
 
 def session_set_classroom_manager_group(flask_session_dict, group):
     flask_session_dict[SESSION_CLASSROOM_MANAGER_GROUP] = group
+
+
+def session_get_classroom_manager_relieve(flask_session_dict):
+    return flask_session_dict.get(SESSION_CLASSROOM_MANAGER_RELIEVE)
+
+
+def session_set_classroom_manager_relieve(flask_session_dict, relieve):
+    flask_session_dict[SESSION_CLASSROOM_MANAGER_RELIEVE] = relieve
