@@ -3,10 +3,10 @@ from lwutils.boto3.resource import Resource
 
 class QueueClient(object):
 
-    def factory(provider, config):
-        if provider == "AWS":
+    def factory(config):
+        if config.get('QUEUE_PROVIDER') == "AWS":
             return AWSQueueClient(config)
-        assert 0, "Unknown Queue provider: " + provider
+        assert 0, "Unknown Queue provider: " + config.get('QUEUE_PROVIDER')
     factory = staticmethod(factory)
 
 
