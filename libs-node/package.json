@@ -25,7 +25,8 @@
         "grunt-contrib-uglify": "0.x",
         "grunt-mocha-test": "0.x",
         "grunt-env": "0.x",
-        "node-uuid": "1.x"
+        "node-uuid": "1.x",
+        "aws-sdk": "2.x"
     },
     "engines": {
         "node": ">=0.10"
