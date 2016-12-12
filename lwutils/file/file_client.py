@@ -51,3 +51,6 @@ class AWSFile(object):
 
     def delete(self):
         self.s3_file.delete()
+
+    def name(self):
+        return self.s3_file.key
