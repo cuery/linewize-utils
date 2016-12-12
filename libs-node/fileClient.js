@@ -1,11 +1,11 @@
 "use strict";
-var s2 = require("./aws").S3;
+var s3 = require("./aws").S3;
 
 function AWSFileClient() {
 
 }
 
-AWSFileClient.prototype.putFile(fileName, fileBody, folder, next) {
+AWSFileClient.prototype.putFile = function(fileName, fileBody, folder, next) {
     var data = {
         Key: fileName,
         Body: fileBody,
@@ -19,7 +19,6 @@ AWSFileClient.prototype.putFile(fileName, fileBody, folder, next) {
         }
     });
 };
-
 
 function FileClient(provider) {
     if (provider === "AWS") {

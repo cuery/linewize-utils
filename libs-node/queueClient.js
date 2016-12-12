@@ -19,7 +19,6 @@ AWSQueueClient.prototype.sendMessage = function (messageBody, queueUrl, next) {
     });
 };
 
-
 function QueueClient(provider) {
     if (provider === "AWS") {
         return new AWSQueueClient();
