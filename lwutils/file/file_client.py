@@ -54,3 +54,6 @@ class AWSFile(object):
 
     def name(self):
         return self.s3_file.key
+
+    def size(self):
+        return self.s3_file.size
