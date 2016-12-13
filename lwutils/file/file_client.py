@@ -25,6 +25,7 @@ class AWSFolder(object):
     def __init__(self, s3_resource, bucket_name):
         self.s3_resource = s3_resource
         self.s3_bucket = self.s3_resource.Bucket(bucket_name)
+        self.s3_bucket_name = bucket_name
 
     def files(self, filter):
         files = []
@@ -34,7 +35,7 @@ class AWSFolder(object):
         return files
 
     def file(self, file_name):
-        s3_file = self.s3_resource.Object(self.s3_bucket, file_name)
+        s3_file = self.s3_resource.Object(self.s3_bucket_name, file_name)
         return AWSFile(s3_file)
 
 
