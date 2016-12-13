@@ -17,7 +17,7 @@ class AWSFileClient(FileClient):
         self.s3 = Resource(self.config).s3()
 
     def get_folder(self, bucket_name):
-        folder = AWSFolder(self.s3.Bucket(bucket_name))
+        folder = AWSFolder(self.s3, bucket_name)
         return folder
 
 
