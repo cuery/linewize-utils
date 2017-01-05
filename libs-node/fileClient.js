@@ -1,5 +1,6 @@
 "use strict";
 var s3 = require("./aws").S3;
+var fs = require('fs');
 
 function AWSFileClient() {
 
@@ -20,9 +21,25 @@ AWSFileClient.prototype.putFile = function(fileName, fileBody, folder, next) {
     });
 };
 
+function LocalFileClient() {
+
+}
+
+LocalFileClient.prototype.putFile = function(fileName, fileBody, folder, next) {
+    fs.writeFile(path.join(folder, filename), fileBody, function(err) {
+        if (err) {
+            next(err);
+        } else {
+            next();
+        }
+    });
+}
+
 function FileClient(provider) {
     if (provider === "AWS") {
         return new AWSFileClient();
+    } else if (provider === "LOCAL") {
+        return new LocalFileClient();
     }
 }
 
