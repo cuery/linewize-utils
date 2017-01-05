@@ -7,7 +7,8 @@ class FileClient(object):
     def factory(config):
         if config.get('FILE_PROVIDER') == "AWS":
             return AWSFileClient(config)
-        if config.get('FILE_PROVIDER') == "LOCAL":
+        elif config.get('FILE_PROVIDER') == "LOCAL":
             return LocalFileClient(config)
-        assert 0, "Unknown File provider: " + config.get('FILE_PROVIDER', "not configured")
+        else:
+            assert 0, "Unknown File provider: " + config.get('FILE_PROVIDER', "not configured")
     factory = staticmethod(factory)

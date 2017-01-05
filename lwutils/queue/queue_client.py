@@ -8,9 +8,10 @@ class QueueClient(object):
     def factory(config):
         if config.get('QUEUE_PROVIDER') == "AWS":
             return AWSQueueClient(config)
-        if config.get('QUEUE_PROVIDER') == "LOCAL":
+        elif config.get('QUEUE_PROVIDER') == "LOCAL":
             return LocalQueueClient(config)
-        if config.get('QUEUE_PROVIDER') == "INMEMORY":
+        elif config.get('QUEUE_PROVIDER') == "INMEMORY":
             return InMemoryQueueClient(config)
-        assert 0, "Unknown Queue provider: " + config.get('QUEUE_PROVIDER', "not configured")
+        else:
+            assert 0, "Unknown Queue provider: " + config.get('QUEUE_PROVIDER', "not configured")
     factory = staticmethod(factory)
