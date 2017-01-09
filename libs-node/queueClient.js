@@ -2,7 +2,6 @@
 var sqs = require("./aws").SQS;
 var config = require('config').config;
 var MongoClient = require('mongodb').MongoClient;
-const path = require('path');
 
 function AWSQueueClient() {
 
@@ -24,7 +23,7 @@ AWSQueueClient.prototype.sendMessage = function(messageBody, queueUrl, next) {
 
 function LocalQueueClient() {
     var self = this;
-    MongoClient.connect(path.join(config.MONGODB_INSTANCE, config.MONGODB_QUEUE_DB), function(err, db) {
+    MongoClient.connect(config.MONGODB_INSTANCE + "/" + config.MONGODB_QUEUE_DB, function(err, db) {
         if (!err) {
             self.db = db;
         } else {
