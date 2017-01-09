@@ -1,4 +1,5 @@
 "use strict";
+/*jshint unused:false*/
 var sqs = require("./aws").SQS;
 var config = require('config').config;
 var MongoClient = require('mongodb').MongoClient;
@@ -23,18 +24,39 @@ AWSQueueClient.prototype.sendMessage = function(messageBody, queueUrl, next) {
 
 function LocalQueueClient() {
     var self = this;
-    MongoClient.connect(config.MONGODB_INSTANCE + "/" + config.MONGODB_QUEUE_DB, function(err, db) {
-        if (!err) {
-            self.db = db;
-        } else {
-            console.log(err)
-        }
-    });
 }
 
-LocalQueueClient.prototype.sendMessage = function(messageBody, queue, next) {
-    self.db.queue.insert({'inProg': False, 'done': False, 'msg': new Buffer(msg).toString('base64')})
-}
+LocalQueueClient.prototype.runQuery = function(next) {
+    if (self.db === undefined) {
+        MongoClient.connect(config.MONGODB_INSTANCE + "/" + config.MONGODB_QUEUE_DB, function(err, db) {
+            if (!err) {
+                self.db = db;
+                next();
+            } else {
+                console.log(err);
+            }
+        });
+    } else {
+        next();
+    }
+};
+
+
+LocalQueueClient.prototype.sendMessage = function(msg, queue, next) {
+    self.runQuery(function(msg, queue, next) {
+        self.db.collection(queue).insert({
+            'inProg': false,
+            'done': false,
+            'msg': new Buffer(msg).toString('base64')
+        }, function(err){
+            if (!err) {
+                next();
+            } else {
+                console.log(err);
+            }
+        });
+    });
+};
 
 function QueueClient(provider) {
     if (provider === "AWS") {
