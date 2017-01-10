@@ -1,9 +1,9 @@
 import json
 import unittest
 import httpretty
-from libs.linewize_api_base_client import LinewizeApiClient, GeneralServiceError, InvalidUserSession, DevicePermissionException
+from lwutils.linewize_api_base_client import LinewizeApiClient, GeneralServiceError, InvalidUserSession, DevicePermissionException
 from sphirewallapi.sphirewall_api import TransportProviderException
-from libs.error_handler import InterApplicationException
+from lwutils.error_handler import InterApplicationException
 
 
 class LinewizeApiClientTestCase(unittest.TestCase):
@@ -27,14 +27,14 @@ class LinewizeApiClientTestCase(unittest.TestCase):
         httpretty.register_uri(httpretty.GET, "http://localhost/blah", body=json.dumps(dict(errcode=0)), status=403)
 
         service = LinewizeApiClient("http://localhost", None, None)
-        self.assertRaises(InterApplicationException, service.get_json, "/blah")
+        self.assertRaises(DevicePermissionException, service.get_json, "/blah")
 
     @httpretty.activate
     def test_invalid_permissions_error_throws_exception(self):
         httpretty.register_uri(httpretty.GET, "http://localhost/blah", body=json.dumps(dict(errcode=1)), status=403)
 
         service = LinewizeApiClient("http://localhost", None, None)
-        self.assertRaises(InterApplicationException, service.get_json, "/blah")
+        self.assertRaises(DevicePermissionException, service.get_json, "/blah")
 
     @httpretty.activate
     def test_valid_request_returns_dict_response(self):
