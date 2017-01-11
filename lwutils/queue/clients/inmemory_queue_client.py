@@ -20,7 +20,8 @@ class InMemoryQueue(object):
     def __init__(self, queues, queue_name):
         self.queues = queues
         self.queue_name = queue_name
-        self.queues[queue_name] = Queue.Queue()
+        if queue_name not in self.queues:
+            self.queues[queue_name] = Queue.Queue()
 
     def send_message(self, message_body):
         self.queues[self.queue_name].put(message_body)
