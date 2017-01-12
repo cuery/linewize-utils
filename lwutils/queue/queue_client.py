@@ -13,5 +13,5 @@ class QueueClient(object):
         elif config.get('QUEUE_PROVIDER') == "INMEMORY":
             return InMemoryQueueClient(config)
         else:
-            assert 0, "Unknown Queue provider: " + config.get('QUEUE_PROVIDER', "not configured")
+            print "Unknown Queue provider: " + config.get('QUEUE_PROVIDER', "not configured")
     factory = staticmethod(factory)

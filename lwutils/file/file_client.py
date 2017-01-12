@@ -10,5 +10,5 @@ class FileClient(object):
         elif config.get('FILE_PROVIDER') == "LOCAL":
             return LocalFileClient(config)
         else:
-            assert 0, "Unknown File provider: " + config.get('FILE_PROVIDER', "not configured")
+            print "Unknown File provider: " + config.get('FILE_PROVIDER', "not configured")
     factory = staticmethod(factory)
