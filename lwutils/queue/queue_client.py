@@ -1,4 +1,6 @@
-from lwutils.boto3.resource import Resource
+from lwutils.queue.clients.aws_queue_client import AWSQueueClient
+from lwutils.queue.clients.local_queue_client import LocalQueueClient
+from lwutils.queue.clients.inmemory_queue_client import InMemoryQueueClient
 
 
 class QueueClient(object):
@@ -6,45 +8,10 @@ class QueueClient(object):
     def factory(config):
         if config.get('QUEUE_PROVIDER') == "AWS":
             return AWSQueueClient(config)
-        # assert 0, "Unknown Queue provider: " + config.get('QUEUE_PROVIDER', "not configured")
+        elif config.get('QUEUE_PROVIDER') == "LOCAL":
+            return LocalQueueClient(config)
+        elif config.get('QUEUE_PROVIDER') == "INMEMORY":
+            return InMemoryQueueClient(config)
+        else:
+            assert 0, "Unknown Queue provider: " + config.get('QUEUE_PROVIDER', "not configured")
     factory = staticmethod(factory)
-
-
-class AWSQueueClient(QueueClient):
-
-    def __init__(self, config):
-        self.config = config
-        self.sqs = Resource(self.config).sqs()
-
-    def get_queue(self, queue_name):
-        queue = AWSQueue(self.sqs.get_queue_by_name(QueueName=queue_name))
-        return queue
-
-
-class AWSQueue(object):
-
-    def __init__(self, sqs_queue):
-        self.sqs_queue = sqs_queue
-
-    def send_message(self, message_body):
-        self.sqs_queue.send_message(MessageBody=message_body)
-
-    def receive_messages(self, max_number_of_messages, wait_time_seconds):
-        msgs = []
-        sqs_msgs = self.sqs_queue.receive_messages(
-            MaxNumberOfMessages=max_number_of_messages, WaitTimeSeconds=wait_time_seconds)
-        for sqs_msg in sqs_msgs:
-            msgs.append(AWSMessage(sqs_msg))
-        return msgs
-
-
-class AWSMessage(object):
-
-    def __init__(self, sqs_msg):
-        self.sqs_msg = sqs_msg
-
-    def get_body(self):
-        return self.sqs_msg.body
-
-    def delete(self):
-        self.sqs_msg.delete()

@@ -28,6 +28,9 @@
         "node-uuid": "1.x",
         "aws-sdk": "2.x"
     },
+    "devDependencies": {
+        "mongodb": "2.2.x"
+    },
     "engines": {
         "node": ">=0.10"
     }

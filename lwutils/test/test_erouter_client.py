@@ -1,11 +1,11 @@
 import unittest
 import mock
-from libs.erouter_client import ERouterClient
+from lwutils.erouter_client import ERouterClient
 
 
 class ERouterClientTestCase(unittest.TestCase):
 
-    @mock.patch('libs.erouter_client.requests')
+    @mock.patch('lwutils.erouter_client.requests')
     def test_publish(self, requests):
         client = ERouterClient("myurl.com")
         try:
@@ -14,7 +14,7 @@ class ERouterClientTestCase(unittest.TestCase):
             self.fail(e)
         requests.put.assert_called_with("myurl.com/topic/mytopic/publish", data='mymessage')
 
-    @mock.patch('libs.erouter_client.requests')
+    @mock.patch('lwutils.erouter_client.requests')
     def test_publish_retry(self, requests):
         returns = [Exception('boom'), 'response']
         requests.put.side_effect = returns
@@ -25,7 +25,7 @@ class ERouterClientTestCase(unittest.TestCase):
             self.fail()
         requests.put.assert_called_with("myurl.com/topic/mytopic/publish", data='mymessage')
 
-    @mock.patch('libs.erouter_client.requests')
+    @mock.patch('lwutils.erouter_client.requests')
     def test_publish_retry_exception(self, requests):
         requests.put.side_effect = Exception('boom')
         client = ERouterClient("myurl.com")

@@ -1,7 +1,7 @@
 import json
 import unittest
 import httpretty
-from libs.device_config_handler import DeviceConfigHandler
+from lwutils.device_config_handler import DeviceConfigHandler
 
 
 class DeviceHandlerTestCase(unittest.TestCase):
@@ -57,7 +57,10 @@ class DeviceHandlerTestCase(unittest.TestCase):
             "update_branch": "stable",
             "classroom_groups_group_prefix": None,
             "classroom_restrict_global_teachers": False,
-            "classwize_reliever_enabled": False
+            "classwize_reliever_enabled": False,
+            "xero_id": "null",
+            "msp": "null",
+            "watchdog_recipients": []
         }
         httpretty.register_uri(
             httpretty.GET, uri="http://service/device/testdevice1", body=json.dumps(dict(result=device)))
@@ -112,7 +115,10 @@ class DeviceHandlerTestCase(unittest.TestCase):
             "update_branch": "stable",
             "classroom_groups_group_prefix": None,
             "classroom_restrict_global_teachers": False,
-            "classwize_reliever_enabled": False
+            "classwize_reliever_enabled": False,
+            "xero_id": "null",
+            "msp": "null",
+            "watchdog_recipients": []
         }
 
         device2 = {
@@ -151,7 +157,10 @@ class DeviceHandlerTestCase(unittest.TestCase):
             "update_branch": "stable",
             "classroom_groups_group_prefix": None,
             "classroom_restrict_global_teachers": False,
-            "classwize_reliever_enabled": False
+            "classwize_reliever_enabled": False,
+            "xero_id": "null",
+            "msp": "null",
+            "watchdog_recipients": []
         }
 
         devices = [device1, device2]

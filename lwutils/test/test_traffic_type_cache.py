@@ -2,7 +2,7 @@ import unittest
 import mock
 import json
 import time
-from libs.traffic_type_cache import TrafficTypeCache
+from lwutils.traffic_type_cache import TrafficTypeCache
 
 
 class Response(object):
@@ -65,7 +65,7 @@ class TrafficTypeCacheTestCase(unittest.TestCase):
             ]
         }))
 
-    @mock.patch('libs.traffic_type_cache.requests')
+    @mock.patch('lwutils.traffic_type_cache.requests')
     def test_get_all_signatures(self, requests):
         requests.get.return_value = self.appindex_response
         expected = {}
@@ -110,7 +110,7 @@ class TrafficTypeCacheTestCase(unittest.TestCase):
 
         self.assertEqual(expected, cache.get_all_signatures())
 
-    @mock.patch('libs.traffic_type_cache.requests')
+    @mock.patch('lwutils.traffic_type_cache.requests')
     def test_get_signature(self, requests):
         requests.get.return_value = self.appindex_response
         expected = {
@@ -135,7 +135,7 @@ class TrafficTypeCacheTestCase(unittest.TestCase):
 
         self.assertEqual(expected, cache.get_signature('sphirewall.minecraft'))
 
-    @mock.patch('libs.traffic_type_cache.requests')
+    @mock.patch('lwutils.traffic_type_cache.requests')
     def test_get_signature_unknown(self, requests):
         requests.get.return_value = self.appindex_response
 
@@ -143,7 +143,7 @@ class TrafficTypeCacheTestCase(unittest.TestCase):
 
         self.assertEqual(None, cache.get_signature('sphirewall.unknown'))
 
-    @mock.patch('libs.traffic_type_cache.requests')
+    @mock.patch('lwutils.traffic_type_cache.requests')
     def test__cache_expired(self, requests):
         requests.get.return_value = self.appindex_response
         cache = TrafficTypeCache('myurl', "fingerprint_url" ,expiry=2)
