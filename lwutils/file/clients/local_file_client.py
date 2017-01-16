@@ -1,5 +1,5 @@
-from os import listdir, remove
-from os.path import isfile, join, getsize
+from os import listdir, remove, makedirs
+from os.path import isfile, join, getsize, dirname, exists
 
 
 class LocalFileClient(object):
@@ -35,8 +35,15 @@ class LocalFile(object):
         return body
 
     def set_body(self, file, public=False):
+        dir = dirname(self.file_path)
+        if not exists(dir):
+            makedirs(dir)
         with open(self.file_path, 'w+') as f:
-            f.write(file)
+            try:
+                f.write(file)
+            except:
+                for line in file:
+                    f.write(line)
 
     def delete(self):
         remove(self.file_path)
