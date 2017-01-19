@@ -90,10 +90,10 @@ class LinewizeApiClient(object):
             "{}{}".format(self._service_url, url), headers=headers, params=params))
         return self._handle_json_response(response)
 
-    def post_json(self, url, data, _device_id=None):
+    def post_json(self, url, data, _device_id=None, whitelabel=None):
         headers = authorize_header(self._application_key_id, self._application_key_secret,
                                    {'Content-type': 'application/json', 'Accept': 'text/plain'})
-        params = {"access_token": self._session_token, 'deviceid': _device_id}
+        params = {"access_token": self._session_token, 'deviceid': _device_id, 'whitelabel': whitelabel}
 
         response = error_handled_response(self._app_name, requests.post(
             "{}{}".format(self._service_url, url), data=json.dumps(data), headers=headers, params=params))
