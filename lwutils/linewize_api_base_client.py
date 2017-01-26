@@ -55,13 +55,7 @@ class LinewizeApiClient(object):
         self._app_name = app_name
 
     def _handle_json_response(self, response):
-        if response.status_code == 401:
-            raise InvalidUserSession("Invalid user session")
-        if response.status_code == 403:
-            raise DevicePermissionException("Permission denied")
-        elif response.status_code != 200:
-            raise GeneralServiceError(response.text)
-        return json.loads(response.text)
+        return json.loads(self._handle_response(response).text)
 
     def _handle_response(self, response):
         if response.status_code == 401:
@@ -98,6 +92,16 @@ class LinewizeApiClient(object):
         response = error_handled_response(self._app_name, requests.post(
             "{}{}".format(self._service_url, url), data=json.dumps(data), headers=headers, params=params))
         return self._handle_json_response(response)
+
+
+    def post_json_no_parsing(self, url, data, _device_id=None, whitelabel=None):
+        headers = authorize_header(self._application_key_id, self._application_key_secret,
+                                   {'Content-type': 'application/json', 'Accept': 'text/plain'})
+        params = {"access_token": self._session_token, 'deviceid': _device_id, 'whitelabel': whitelabel}
+
+        response = error_handled_response(self._app_name, requests.post(
+            "{}{}".format(self._service_url, url), data=json.dumps(data), headers=headers, params=params))
+        return self._handle_response(response)
 
     def post_json_file(self, url, data, _device_id=None):
         headers = authorize_header(self._application_key_id, self._application_key_secret,
