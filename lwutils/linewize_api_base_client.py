@@ -101,7 +101,8 @@ class LinewizeApiClient(object):
 
         response = error_handled_response(self._app_name, requests.post(
             "{}{}".format(self._service_url, url), data=json.dumps(data), headers=headers, params=params))
-        return self._handle_response(response), response.headers["Config-Version"]
+        version = response.headers.get("Config-Version", "")
+        return self._handle_response(response), version
 
     def post_json_file(self, url, data, _device_id=None):
         headers = authorize_header(self._application_key_id, self._application_key_secret,
