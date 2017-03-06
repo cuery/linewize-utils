@@ -4,11 +4,9 @@ import time
 
 
 class TrafficTypeCache(object):
-    def __init__(self, appindex_url, fingerprint_urls, expiry=7200):
+    def __init__(self, appindex_url, expiry=7200):
         self.appindex_url = appindex_url
-        self.fingerprint_urls = fingerprint_urls
         self.expiry = expiry
-
         self.last_update = None
         self.signature_cache = {}
         self.fingerprint_cache = {}
@@ -16,10 +14,18 @@ class TrafficTypeCache(object):
     def _cache_expired(self):
         return self.last_update is None or (time.time() - self.last_update) > self.expiry
 
+    def __get_appindex_signature_uri(self):
+        response = requests.get(self.appindex_url)
+        return json.loads(response.text)["signatures"]
+
+    def __get_appindex_fingerprints_uri(self):
+        response = requests.get(self.appindex_url)
+        return json.loads(response.text)["fingerprints"]
+
     def _reload_signature_cache(self):
         print "_reload_signature_cache() called"
 
-        response = requests.get(self.appindex_url)
+        response = requests.get(self.__get_appindex_signature_uri())
         appindex = json.loads(response.text)
         tmp_siganture_cache = {}
         if 'signatures' in appindex:
@@ -30,7 +36,7 @@ class TrafficTypeCache(object):
 
     def _reload_fingerprint_cache(self):
         print "_reload_fingerprint_cache() called"
-        response = requests.get(self.fingerprint_urls)
+        response = requests.get(self.__get_appindex_fingerprints_uri())
         appindex = json.loads(response.text)
         self.fingerprint_cache = {}
         if 'fingerprints' in appindex:
