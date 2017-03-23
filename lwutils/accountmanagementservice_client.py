@@ -310,11 +310,13 @@ class AccountManagementPersistenceService():
             "{}/device/{}/snapshots".format(ams_url, deviceid), data=dict(account=account, description=description, snapshot=snapshot), device_id=deviceid)
         return True
 
+    @staticmethod
     def get_device_configuration_snapshots(ams_url, deviceid):
         response = AccountManagementPersistenceService.__get_json(
             "{}/device/{}/snapshots".format(ams_url, deviceid), device_id=deviceid)
         return response["result"]
 
+    @staticmethod
     def get_device_configuration_snapshot(ams_url, deviceid, snapshotid):
         response = AccountManagementPersistenceService.__get_json(
             "{}/device/{}/snapshots/{}".format(ams_url, deviceid, snapshotid), device_id=deviceid)
