@@ -311,7 +311,13 @@ class AccountManagementPersistenceService():
         return True
 
     def get_device_configuration_snapshots(ams_url, deviceid):
-        response = AccountManagementPersistenceService.__get_json("{}/device/{}/snapshots".format(ams_url, deviceid), device_id=deviceid)
+        response = AccountManagementPersistenceService.__get_json(
+            "{}/device/{}/snapshots".format(ams_url, deviceid), device_id=deviceid)
+        return response["result"]
+
+    def get_device_configuration_snapshot(ams_url, deviceid, snapshotid):
+        response = AccountManagementPersistenceService.__get_json(
+            "{}/device/{}/snapshots/{}".format(ams_url, deviceid, snapshotid), device_id=deviceid)
         return response["result"]
 
     @staticmethod
