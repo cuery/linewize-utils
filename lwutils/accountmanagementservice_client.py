@@ -310,6 +310,10 @@ class AccountManagementPersistenceService():
             "{}/device/{}/snapshots".format(ams_url, deviceid), data=dict(account=account, description=description, snapshot=snapshot), device_id=deviceid)
         return True
 
+    def get_device_configuration_snapshots(ams_url, deviceid):
+        response = AccountManagementPersistenceService.__get_json("{}/device/{}/snapshots".format(ams_url, deviceid), device_id=deviceid)
+        return response["result"]
+
     @staticmethod
     def add_new_device_watchdog_event(ams_url, deviceid, event):
         data = {"time": time.time(), "event": event, "deviceid": deviceid}
