@@ -30,6 +30,7 @@ class TrafficTypeCache(object):
         tmp_siganture_cache = {}
         if 'signatures' in appindex:
             for signature in appindex['signatures']:
+                del signature["criteria"]
                 tmp_siganture_cache[signature['id']] = signature
             self.signature_cache = tmp_siganture_cache
             self.last_update = time.time()
