@@ -1,5 +1,5 @@
 from datetime import datetime
-import json
+import ujson as json
 import requests
 from lwutils.sphirewall_connection import ApiDispatcherTransportProvider
 from sphirewallapi.sphirewall_api import SphirewallClient

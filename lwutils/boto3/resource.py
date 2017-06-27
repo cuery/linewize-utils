@@ -28,3 +28,6 @@ class Resource(object):
 
     def ec2(self, region_name=None, **kwargs):
         return self._resource("ec2", region_name=region_name, **kwargs)
+
+    def kinesis(self, region_name=None, **kwargs):
+        return self._resource("kinesis", region_name=region_name, **kwargs)
