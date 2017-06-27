@@ -84,6 +84,8 @@ class CloudDevice:
     xero_id = None
     msp = None
     classwize_reliever_enabled = False
+    logging_configuration__upload_ttl=0
+    logging_configuration__flush_files=False
 
     # If you add an attribute to this class, MAKE SURE YOU ADD IT TO THIS LIST
     attributes = ["deviceid", "description", "user_defined_name",
@@ -96,7 +98,8 @@ class CloudDevice:
                   "allow_public_source_ip", "failover_active", "stats_active", "classroom_allow_owner_access",
                   "classroom_restrict_global_teachers", "inventory", "update_allow_auto",
                   "update_branch", "classroom_groups_group_prefix",
-                  "watchdog_recipients", "xero_id", "msp", "classwize_reliever_enabled"]
+                  "watchdog_recipients", "xero_id", "msp", "classwize_reliever_enabled",
+                  "logging_configuration__upload_ttl", "logging_configuration__flush_files"]
 
     def __init__(self, deviceid=None, description=""):
         self.deviceid = deviceid
