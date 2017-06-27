@@ -552,3 +552,9 @@ class AccountManagementPersistenceService():
     def get_all_msps(service_url):
         response = AccountManagementPersistenceService.__get_json("{}/msps".format(service_url))
         return response["result"]
+
+    @staticmethod
+    def get_user_downvotes(service_url, deviceid):
+        response = AccountManagementPersistenceService.__get_json(
+            "{}/device/{}/user/downvotes".format(service_url, deviceid))
+        return response["result"]
