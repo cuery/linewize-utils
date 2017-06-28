@@ -85,7 +85,7 @@ class CloudDevice:
     msp = None
     classwize_reliever_enabled = False
     logging_configuration__upload_ttl=0
-    logging_configuration__flush_files=False
+    logging_configuration__flush_files=0
 
     # If you add an attribute to this class, MAKE SURE YOU ADD IT TO THIS LIST
     attributes = ["deviceid", "description", "user_defined_name",
