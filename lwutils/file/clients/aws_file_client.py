@@ -37,9 +37,13 @@ class AWSFile(object):
     def get_body(self):
         return self.s3_file.get()["Body"].read()
 
-    def set_body(self, file, public=False):
+    def set_body(self, file, public=False, content_encoding=None):
         acl = 'private' if not public else 'public-read'
-        self.s3_file.put(ACL=acl, Body=file)
+
+        if content_encoding:
+            self.s3_file.put(ACL=acl, Body=file, ContentEncoding=content_encoding)
+        else:
+            self.s3_file.put(ACL=acl, Body=file)
 
     def delete(self):
         self.s3_file.delete()

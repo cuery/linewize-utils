@@ -34,7 +34,7 @@ class LocalFile(object):
             body = f.read()
         return body
 
-    def set_body(self, file, public=False):
+    def set_body(self, file, public=False, content_encoding=None):
         dir = dirname(self.file_path)
         if not exists(dir):
             makedirs(dir)
