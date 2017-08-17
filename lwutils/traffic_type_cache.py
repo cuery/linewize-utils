@@ -4,12 +4,13 @@ import time
 
 
 class TrafficTypeCache(object):
-    def __init__(self, appindex_url, expiry=7200):
+    def __init__(self, appindex_url, expiry=7200, keep_criteria=False):
         self.appindex_url = appindex_url
         self.expiry = expiry
         self.last_update = None
         self.signature_cache = {}
         self.fingerprint_cache = {}
+        self.keep_criteria = keep_criteria
 
     def _cache_expired(self):
         return self.last_update is None or (time.time() - self.last_update) > self.expiry
@@ -30,7 +31,8 @@ class TrafficTypeCache(object):
         tmp_siganture_cache = {}
         if 'signatures' in appindex:
             for signature in appindex['signatures']:
-                del signature["criteria"]
+                if not self.keep_criteria:
+                    del signature["criteria"]
                 tmp_siganture_cache[signature['id']] = signature
             self.signature_cache = tmp_siganture_cache
             self.last_update = time.time()
@@ -78,6 +80,14 @@ class TrafficTypeCache(object):
         if direct_hit_sig:
             return direct_hit_sig
         return self.get_signature_by_name(signature_id)
+
+    def get_signature_children(self, signature_id):
+        self._reload_cache()
+        ret = []
+        for signature in self.signature_cache.values():
+            if signature.get("category") == signature_id:
+                ret.append(signature)
+        return ret
 
     def get_signature_by_name(self, signature_id):
         self._reload_cache()
