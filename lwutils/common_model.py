@@ -87,6 +87,7 @@ class CloudDevice:
     logging_configuration__upload_ttl = 0
     logging_configuration__flush_files = 0
     teacher_classrooms_enabled = False
+    classroom_excluded_teachers = None
 
     # If you add an attribute to this class, MAKE SURE YOU ADD IT TO THIS LIST
     attributes = ["deviceid", "description", "user_defined_name",
@@ -100,7 +101,8 @@ class CloudDevice:
                   "classroom_restrict_global_teachers", "inventory", "update_allow_auto",
                   "update_branch", "classroom_groups_group_prefix",
                   "watchdog_recipients", "xero_id", "msp", "classwize_reliever_enabled",
-                  "logging_configuration__upload_ttl", "logging_configuration__flush_files", "teacher_classrooms_enabled"]
+                  "logging_configuration__upload_ttl", "logging_configuration__flush_files", 
+                  "teacher_classrooms_enabled", "classroom_excluded_teachers"]
 
     def __init__(self, deviceid=None, description=""):
         self.deviceid = deviceid
