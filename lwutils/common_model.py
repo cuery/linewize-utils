@@ -87,7 +87,7 @@ class CloudDevice:
     logging_configuration__upload_ttl = 0
     logging_configuration__flush_files = 0
     teacher_classrooms_enabled = False
-    classroom_excluded_teachers = None
+    classroom_excluded_teachers = []
 
     # If you add an attribute to this class, MAKE SURE YOU ADD IT TO THIS LIST
     attributes = ["deviceid", "description", "user_defined_name",
