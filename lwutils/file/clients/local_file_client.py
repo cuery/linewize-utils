@@ -17,11 +17,15 @@ class LocalFolder(object):
         self.folder_name = folder_name
 
     def files(self, filter=""):
-        files = [f for f in listdir(self.folder_name) if isfile(join(self.folder_name, f)) and f.startswith(filter)]
+        files = [f for f in listdir(self.folder_name) if isfile(
+            join(self.folder_name, f)) and f.startswith(filter)]
         return files
 
     def file(self, file_name):
         return LocalFile(join(self.folder_name, file_name))
+
+    def generate_url(self, file_name, expiry=600):
+        return "Not implemented yet"
 
 
 class LocalFile(object):

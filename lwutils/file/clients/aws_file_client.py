@@ -11,7 +11,6 @@ class AWSFileClient(object):
         folder = AWSFolder(self.s3, bucket_name)
         return folder
 
-
 class AWSFolder(object):
     def __init__(self, s3_resource, bucket_name):
         self.s3_resource = s3_resource
@@ -29,6 +28,15 @@ class AWSFolder(object):
         s3_file = self.s3_resource.Object(self.s3_bucket_name, file_name)
         return AWSFile(s3_file)
 
+    def generate_url(self, file_name, expiry=600):
+        url = self.s3_resource.meta.client.generate_presigned_url(
+            'get_object',
+            Params={
+                'Bucket': self.s3_bucket_name,
+                'Key': file_name, },
+            ExpiresIn=expiry, )
+        return url
+
 
 class AWSFile(object):
     def __init__(self, s3_file):
@@ -41,7 +49,8 @@ class AWSFile(object):
         acl = 'private' if not public else 'public-read'
 
         if content_encoding:
-            self.s3_file.put(ACL=acl, Body=file, ContentEncoding=content_encoding)
+            self.s3_file.put(ACL=acl, Body=file,
+                             ContentEncoding=content_encoding)
         else:
             self.s3_file.put(ACL=acl, Body=file)
 
