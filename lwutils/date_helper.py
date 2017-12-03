@@ -81,6 +81,11 @@ class DateHelper:
         return datetime.fromtimestamp(timestamp, DateHelper._find_timezone(tz)).strftime("%Y-%m-%d")
 
     @staticmethod
+    def formated_first_of_month_from_timestamp(timestamp, tz=None):
+        return datetime.fromtimestamp(timestamp, DateHelper._find_timezone(tz)).replace(day=1).strftime("%Y-%m-%d")
+
+
+    @staticmethod
     def formated_time_and_day_from_tz_aware_date_string(str):
         """
             expects str =  "2015-06-26 00:10:04+12:00"
