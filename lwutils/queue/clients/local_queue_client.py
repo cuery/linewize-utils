@@ -44,4 +44,4 @@ class LocalMessage(object):
         return self.msg['msg']
 
     def delete(self):
-        self.local_queue.delete(self.msg['id'])
+        self.queue_client.delete(self.local_queue, self.msg['id'])
