@@ -27,6 +27,9 @@ function LocalFileClient() {
 }
 
 LocalFileClient.prototype.putFile = function(fileName, fileBody, folder, next) {
+    if(!fs.exists(folder)) {
+        fs.mkdirSync(folder);
+    }
     fs.writeFile(path.join(folder, fileName), fileBody, function(err) {
         if (err) {
             next(err);
