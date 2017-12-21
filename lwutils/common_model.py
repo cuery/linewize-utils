@@ -88,6 +88,7 @@ class CloudDevice:
     logging_configuration__flush_files = 0
     teacher_classrooms_enabled = False
     mobilezone_enabled = False
+    mobilezone_groups = []
 
     # If you add an attribute to this class, MAKE SURE YOU ADD IT TO THIS LIST
     attributes = ["deviceid", "description", "user_defined_name",
@@ -102,7 +103,7 @@ class CloudDevice:
                   "update_branch", "classroom_groups_group_prefix",
                   "watchdog_recipients", "xero_id", "msp", "classwize_reliever_enabled",
                   "logging_configuration__upload_ttl", "logging_configuration__flush_files", 
-                  "teacher_classrooms_enabled", "mobilezone_enabled"]
+                  "teacher_classrooms_enabled", "mobilezone_enabled", "mobilezone_groups"]
 
     def __init__(self, deviceid=None, description=""):
         self.deviceid = deviceid
