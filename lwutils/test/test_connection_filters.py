@@ -1,7 +1,7 @@
 import unittest
 from lwutils.connection_filters import filter_items, filter_items_with_users, is_public_ip, \
     filter_no_data_and_local_ip, filter_no_data_and_local_ip_with_users, filter_items_without_source_hostname, \
-    filter_items_with_ports, filter_items_with_users_for_httpHost_or_tag, filter_items_for_httpHost_or_tag, filert_items_with_category
+    filter_items_with_ports, filter_items_with_users_for_httpHost_or_tag, filter_items_for_httpHost_or_tag, filter_items_with_category
 
 
 class TestUpdateAnalyticsFilter(unittest.TestCase):
@@ -449,6 +449,6 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             'categoryId': 'sphirewall.application.internetandtelecom'
         }
 
-        assert not filert_items_with_category(item_no_categoryId)
-        assert not filert_items_with_category(item_empty_categoryId)
-        assert filert_items_with_category(item_with_categoryId)
+        assert not filter_items_with_category(item_no_categoryId)
+        assert not filter_items_with_category(item_empty_categoryId)
+        assert filter_items_with_category(item_with_categoryId)
