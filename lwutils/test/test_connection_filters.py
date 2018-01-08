@@ -1,7 +1,7 @@
 import unittest
 from lwutils.connection_filters import filter_items, filter_items_with_users, is_public_ip, \
     filter_no_data_and_local_ip, filter_no_data_and_local_ip_with_users, filter_items_without_source_hostname, \
-    filter_items_with_ports, filter_items_with_users_for_httpHost_or_tag, filter_items_for_httpHost_or_tag
+    filter_items_with_ports, filter_items_with_users_for_httpHost_or_tag, filter_items_for_httpHost_or_tag, filert_items_with_category
 
 
 class TestUpdateAnalyticsFilter(unittest.TestCase):
@@ -410,3 +410,45 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
         }
         assert filter_items_with_ports(item_one)
         assert not filter_items_with_ports(item_two)
+
+
+    def test_filter_category(self):
+        item_no_categoryId = {
+            'httpHost': 'pcschool.cbhs.school.nz',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'sourceHostname': 'localhost'
+        }
+
+        item_empty_categoryId = {
+            'httpHost': 'pcschool.cbhs.school.nz',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 43243,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'categoryId': ''
+        }
+
+        item_with_categoryId = {
+            'httpHost': 'pcschool.cbhs.school.nz',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 43243,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'categoryId': 'sphirewall.application.internetandtelecom'
+        }
+
+        assert not filert_items_with_category(item_no_categoryId)
+        assert not filert_items_with_category(item_empty_categoryId)
+        assert filert_items_with_category(item_with_categoryId)

@@ -59,6 +59,11 @@ def filter_items_with_ports(item):
     return None
 
 
+def filert_items_with_category(item):
+    if 'categoryId' in item and item['categoryId']:
+        return item
+    return None
+
 def is_public_ip(ip):
     try:
         int_ip = ip_from_string(ip)
