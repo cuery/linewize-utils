@@ -1,7 +1,8 @@
 import unittest
 from lwutils.connection_filters import filter_items, filter_items_with_users, is_public_ip, \
     filter_no_data_and_local_ip, filter_no_data_and_local_ip_with_users, filter_items_without_source_hostname, \
-    filter_items_with_ports, filter_items_with_users_for_httpHost_or_tag, filter_items_for_httpHost_or_tag, filter_items_with_category
+    filter_items_with_ports, filter_items_with_users_for_httpHost_or_tag, filter_items_for_httpHost_or_tag, \
+    filter_items_with_category, filter_items_with_search_query
 
 
 class TestUpdateAnalyticsFilter(unittest.TestCase):
@@ -452,3 +453,41 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
         assert not filter_items_with_category(item_no_categoryId)
         assert not filter_items_with_category(item_empty_categoryId)
         assert filter_items_with_category(item_with_categoryId)
+
+    def test_filter_items_with_search_query(self):
+        item_one = {
+            'httpHost': 'pcschool.cbhs.school.nz',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': []
+        }
+        item_two = {
+            'httpHost': 'pcschool.cbhs.school.nz',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["foo bar"]
+        }
+        item_bing_search = {
+            'httpHost': 'pcschool.cbhs.school.nz',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["https://www.bing.com/search?q=how+to+make+bomb&form=EDGEAR&qs=OS&cvid=ae3743f5cc154c6b89c09a9209176260&cc=AU&setlang=en-US"]
+        }
+        assert not filter_items_with_search_query(item_one)
+        assert not filter_items_with_search_query(item_two)
+        assert filter_items_with_search_query(item_bing_search)

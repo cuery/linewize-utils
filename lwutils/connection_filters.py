@@ -1,3 +1,5 @@
+import re
+
 def filter_items(item):
     if 'httpHost' in item and len(item['httpHost']) > 0 and '.' in item['httpHost'] and (item['upload'] != 0 or item['download'] != 0) \
             and 'sourceIp' in item and not is_public_ip(item['sourceIp']):
@@ -58,6 +60,12 @@ def filter_items_with_ports(item):
         return item
     return None
 
+
+def filter_items_with_search_query(item):
+    if not item.get("http_request_uris"):
+        return None
+    p = re.compile('^(.*)(google.co[a-z.]+\/(search|webhp)|bing.com\/search|duckduckgo.com|search.yahoo).*([q]=).*', re.IGNORECASE)
+    return item if p.match(item.get('http_request_uris')[0]) else None
 
 def filter_items_with_category(item):
     if 'categoryId' in item and item['categoryId']:
