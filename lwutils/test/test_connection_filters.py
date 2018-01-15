@@ -467,7 +467,7 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             'http_request_uris': []
         }
         item_two = {
-            'httpHost': 'pcschool.cbhs.school.nz',
+            'httpHost': 'www.bing.com',
             'hwAddress': '98:0c:82:5d:df:6a',
             'destPort': 80,
             'upload': 654925,
@@ -478,7 +478,7 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             'http_request_uris': ["foo bar"]
         }
         item_bing_search = {
-            'httpHost': 'pcschool.cbhs.school.nz',
+            'httpHost': 'www.bing.com',
             'hwAddress': '98:0c:82:5d:df:6a',
             'destPort': 80,
             'upload': 654925,
@@ -486,8 +486,44 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             'sourceIp': '10.103.1.36',
             'time': '1386810101',
             'user': 'da_user',
-            'http_request_uris': ["https://www.bing.com/search?q=how+to+make+bomb&form=EDGEAR&qs=OS&cvid=ae3743f5cc154c6b89c09a9209176260&cc=AU&setlang=en-US"]
+            'http_request_uris': ["/search?q=how+to+make+bomb&form=EDGEAR&qs=OS&cvid=ae3743f5cc154c6b89c09a9209176260&cc=AU&setlang=en-US"]
+        }
+        item_google_search = {
+            'httpHost': 'www.google.co.nz',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["/search?dcr=0&source=hp&ei=0BVdWryCPMiu8QWy3YrwBQ&q=foo&oq=foo&gs_l=psy-ab.3..0l2j0i131k1j0l2j0i131k1l3j0l2.3881.4180.0.4468.4.3.0.0.0.0.215.215.2-1.1.0....0...1c.1.64.psy-ab..3.1.214.0...0.rLeXT0Jqqrk"]
+        }
+        item_yahoo_search = {
+            'httpHost': 'nz.search.yahoo.com',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["/search?p=adventure+bike&fr=yfp-t&fp=1&toggle=1&cop=mss&ei=UTF-8"]
+        }
+        item_duck_duck_go_search = {
+            'httpHost': 'duckduckgo.com',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["/?q=hard+rock+music&t=hf&ia=audio"]
         }
         assert not filter_items_with_search_query(item_one)
         assert not filter_items_with_search_query(item_two)
         assert filter_items_with_search_query(item_bing_search)
+        assert filter_items_with_search_query(item_google_search)
+        assert filter_items_with_search_query(item_yahoo_search)
+        assert filter_items_with_search_query(item_duck_duck_go_search)

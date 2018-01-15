@@ -62,10 +62,11 @@ def filter_items_with_ports(item):
 
 
 def filter_items_with_search_query(item):
-    if not item.get("http_request_uris"):
+    if not item.get("http_request_uris") or not item.get("httpHost"):
         return None
-    p = re.compile('^(.*)(google.co[a-z.]+\/(search|webhp)|bing.com\/search|duckduckgo.com|search.yahoo).*([q]=).*', re.IGNORECASE)
-    return item if p.match(item.get('http_request_uris')[0]) else None
+    p_httpHost = re.compile('^(.*)(google.co[a-z.]|bing.com|duckduckgo.com|search.yahoo)', re.IGNORECASE)
+    p_http_request_uris = re.compile("\/.*([q|p]=).*", re.IGNORECASE)
+    return item if p_httpHost.match(item.get("httpHost")) and p_http_request_uris.match(item.get('http_request_uris')[0]) else None
 
 def filter_items_with_category(item):
     if 'categoryId' in item and item['categoryId']:
