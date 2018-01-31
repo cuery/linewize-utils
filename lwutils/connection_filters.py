@@ -65,7 +65,7 @@ def filter_items_with_search_query(item):
     if not item.get("http_request_uris") or not item.get("httpHost"):
         return None
     p_httpHost = re.compile('^(.*)(google.co[a-z.]|bing.com|duckduckgo.com|search.yahoo)', re.IGNORECASE)
-    p_http_request_uris = re.compile("\/.*([q|p]=).*", re.IGNORECASE)
+    p_http_request_uris = re.compile(".*([q|p]=).*", re.IGNORECASE)
     return item if p_httpHost.match(item.get("httpHost")) and p_http_request_uris.match(item.get('http_request_uris')[0]) else None
 
 def filter_items_with_category(item):

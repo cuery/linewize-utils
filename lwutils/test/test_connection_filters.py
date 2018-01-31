@@ -83,7 +83,8 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
         assert filter_items_with_users(item_with_username)
         assert not filter_items_with_users(item_without_username)
         assert filter_no_data_and_local_ip_with_users(item_with_username)
-        assert not filter_no_data_and_local_ip_with_users(item_without_username)
+        assert not filter_no_data_and_local_ip_with_users(
+            item_without_username)
 
     def test_filter_items_with_users_for_httpHost_or_tag(self):
         item_with_username_httpHost_no_tag = {
@@ -146,11 +147,16 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             'tag': 'look_a_tag'
         }
 
-        assert filter_items_with_users_for_httpHost_or_tag(item_with_username_httpHost_no_tag)
-        assert filter_items_with_users_for_httpHost_or_tag(item_with_username_no_httpHost_tag)
-        assert not filter_items_with_users_for_httpHost_or_tag(item_without_username_but_httpHost)
-        assert not filter_items_with_users_for_httpHost_or_tag(item_without_username_but_tag)
-        assert not filter_items_with_users_for_httpHost_or_tag(item_without_username_but_tag_and_httpHost)
+        assert filter_items_with_users_for_httpHost_or_tag(
+            item_with_username_httpHost_no_tag)
+        assert filter_items_with_users_for_httpHost_or_tag(
+            item_with_username_no_httpHost_tag)
+        assert not filter_items_with_users_for_httpHost_or_tag(
+            item_without_username_but_httpHost)
+        assert not filter_items_with_users_for_httpHost_or_tag(
+            item_without_username_but_tag)
+        assert not filter_items_with_users_for_httpHost_or_tag(
+            item_without_username_but_tag_and_httpHost)
 
     def test_filter_items_for_httpHost_or_tag(self):
         item_with_username_httpHost_no_tag = {
@@ -214,11 +220,15 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
         }
 
         filter_items_for_httpHost_or_tag
-        assert filter_items_for_httpHost_or_tag(item_with_username_httpHost_no_tag)
-        assert filter_items_for_httpHost_or_tag(item_with_username_no_httpHost_tag)
-        assert filter_items_for_httpHost_or_tag(item_without_username_but_httpHost)
+        assert filter_items_for_httpHost_or_tag(
+            item_with_username_httpHost_no_tag)
+        assert filter_items_for_httpHost_or_tag(
+            item_with_username_no_httpHost_tag)
+        assert filter_items_for_httpHost_or_tag(
+            item_without_username_but_httpHost)
         assert filter_items_for_httpHost_or_tag(item_without_username_but_tag)
-        assert not filter_items_for_httpHost_or_tag(item_without_username_no_tag_and_no_httpHost)
+        assert not filter_items_for_httpHost_or_tag(
+            item_without_username_no_tag_and_no_httpHost)
 
     def test_filter_invalid_website(self):
         item_with_valid_website = {
@@ -381,10 +391,14 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             'sourceHostname': 'unknown'
         }
 
-        assert filter_items_without_source_hostname(item_one_with_source_hostname)
-        assert not filter_items_without_source_hostname(item_one_with_no_source_hostname_attribute)
-        assert not filter_items_without_source_hostname(item_one_with_no_source_hostname_value)
-        assert not filter_items_without_source_hostname(item_one_with_unknown_source_hostname)
+        assert filter_items_without_source_hostname(
+            item_one_with_source_hostname)
+        assert not filter_items_without_source_hostname(
+            item_one_with_no_source_hostname_attribute)
+        assert not filter_items_without_source_hostname(
+            item_one_with_no_source_hostname_value)
+        assert not filter_items_without_source_hostname(
+            item_one_with_unknown_source_hostname)
 
     def test_filter_ports(self):
         item_one = {
@@ -411,7 +425,6 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
         }
         assert filter_items_with_ports(item_one)
         assert not filter_items_with_ports(item_two)
-
 
     def test_filter_category(self):
         item_no_categoryId = {
@@ -521,9 +534,35 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             'user': 'da_user',
             'http_request_uris': ["/?q=hard+rock+music&t=hf&ia=audio"]
         }
+        item_bing = {
+            "sourceIp": "10.61.164.13",
+            "destIp": "",
+            "sourcePort": 0,
+            "destPort": 80,
+            "time": 1517372173,
+            "packets": 0,
+            "lifetime": 0,
+            "upload": 1106,
+            "download": 47638,
+            "protocol": 6,
+            "final_connection_object": True,
+            "hwAddress": "dc:a9:04:7e:bb:79",
+            "user": "cn=darel lasrado,ou=staff,dc=bxh01,dc=prd,dc=familyzone,dc=com",
+            "httpHost": "www.bing.com",
+            "tag": "",
+            "subCategoryId": "-",
+            "categoryId": "CT-Search_Engines_And_Portals",
+            "http_request_uris": [
+                "GET /search?q=bingo+australia\u0026qs=n\u0026form=QBRE\u0026sp=-1\u0026pq=bingo+australia\u0026sc=8-15\u0026sk=\u0026cvid=94E3D165B94243A7AB8DA1AB06332515"
+            ],
+            "app_filtering_denied": False,
+            "verdict_filter_rule": "OK",
+            "cache_state": "MISS"
+        }
         assert not filter_items_with_search_query(item_one)
         assert not filter_items_with_search_query(item_two)
         assert filter_items_with_search_query(item_bing_search)
+        assert filter_items_with_search_query(item_bing)
         assert filter_items_with_search_query(item_google_search)
         assert filter_items_with_search_query(item_yahoo_search)
         assert filter_items_with_search_query(item_duck_duck_go_search)
