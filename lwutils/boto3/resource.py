@@ -31,6 +31,3 @@ class Resource(object):
 
     def kinesis(self, region_name=None, **kwargs):
         return self._resource("kinesis", region_name=region_name, **kwargs)
-
-    def athena(self, region_name=None, **kwargs):
-        return self._resource("athena", region_name=region_name, **kwargs)
