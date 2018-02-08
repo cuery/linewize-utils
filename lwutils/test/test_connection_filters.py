@@ -2,7 +2,7 @@ import unittest
 from lwutils.connection_filters import filter_items, filter_items_with_users, is_public_ip, \
     filter_no_data_and_local_ip, filter_no_data_and_local_ip_with_users, filter_items_without_source_hostname, \
     filter_items_with_ports, filter_items_with_users_for_httpHost_or_tag, filter_items_for_httpHost_or_tag, \
-    filter_items_with_category, filter_items_with_search_query, filter_item_with_viedeo_views
+    filter_items_with_category, filter_items_with_search_query, filter_item_with_video_views
 
 
 class TestUpdateAnalyticsFilter(unittest.TestCase):
@@ -600,7 +600,7 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
         assert filter_items_with_search_query(item_michaesearch)
 
 
-    def test_filter_item_with_viedeo_views(self):
+    def test_filter_item_with_video_views(self):
         item_one = {
             'httpHost': 'pcschool.cbhs.school.nz',
             'hwAddress': '98:0c:82:5d:df:6a',
@@ -678,10 +678,10 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             'user': 'da_user',
             'http_request_uris': ["GET /watch?v=QUvVdTlA23w&list=PLf7fnw8RkLVda0FdsKI1Eddf0NQOLwuxe&index=2"]
         }
-        assert not filter_item_with_viedeo_views(item_one)
-        assert not filter_item_with_viedeo_views(item_two)
-        assert not filter_item_with_viedeo_views(item_youtube_search)
-        assert filter_item_with_viedeo_views(item_youtube_video_view)
-        assert filter_item_with_viedeo_views(item_youtube_video_view_time_select)
-        assert filter_item_with_viedeo_views(item_youtube_video_view_playlist)
-        assert filter_item_with_viedeo_views(item_youtube_video_view_playlist_next_video)
+        assert not filter_item_with_video_views(item_one)
+        assert not filter_item_with_video_views(item_two)
+        assert not filter_item_with_video_views(item_youtube_search)
+        assert filter_item_with_video_views(item_youtube_video_view)
+        assert filter_item_with_video_views(item_youtube_video_view_time_select)
+        assert filter_item_with_video_views(item_youtube_video_view_playlist)
+        assert filter_item_with_video_views(item_youtube_video_view_playlist_next_video)
