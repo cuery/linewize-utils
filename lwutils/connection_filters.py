@@ -68,6 +68,13 @@ def filter_items_with_search_query(item):
     p_http_request_uris = re.compile(".*([q|p]=).*", re.IGNORECASE)
     return item if p_httpHost.match(item.get("httpHost")) and p_http_request_uris.match(item.get('http_request_uris')[0]) else None
 
+def filter_item_with_viedeo_views(item):
+    if not item.get("http_request_uris") or not item.get("httpHost"):
+        return None
+    p_httpHost = re.compile('^(.*)(youtube.com)', re.IGNORECASE)
+    p_http_request_uris = re.compile(".*(v=).*", re.IGNORECASE)
+    return item if p_httpHost.match(item.get("httpHost")) and p_http_request_uris.match(item.get('http_request_uris')[0]) else None
+
 def filter_items_with_category(item):
     if 'categoryId' in item and item['categoryId']:
         return item

@@ -2,7 +2,7 @@ import unittest
 from lwutils.connection_filters import filter_items, filter_items_with_users, is_public_ip, \
     filter_no_data_and_local_ip, filter_no_data_and_local_ip_with_users, filter_items_without_source_hostname, \
     filter_items_with_ports, filter_items_with_users_for_httpHost_or_tag, filter_items_for_httpHost_or_tag, \
-    filter_items_with_category, filter_items_with_search_query
+    filter_items_with_category, filter_items_with_search_query, filter_item_with_viedeo_views
 
 
 class TestUpdateAnalyticsFilter(unittest.TestCase):
@@ -559,6 +559,37 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             "verdict_filter_rule": "OK",
             "cache_state": "MISS"
         }
+        item_michaesearch = {
+            "app_filtering_denied": False,
+            "categoryId": "",
+            "contenttype": "application/json; charset=UTF-8",
+            "destIp": "216.58.203.100",
+            "destPort": 443,
+            "download": 720,
+            "final_connection_object": True,
+            "fingerprint": "",
+            "geoip_destination": "US",
+            "geoip_source": "",
+            "httpHost": "www.google.com",
+            "http_request_uris": ["GET /complete/search?client=psy-ab&hl=en-NZ&gs_rn=64&gs_ri=psy-ab&pq=sex&cp=4&gs_id=v&q=test&xhr=t HTTP/1.1"],
+            "hwAddress": "-",
+            "inputDev": "",
+            "lifetime": 0,
+            "noise": True,
+            "outputDev": "",
+            "packets": 3,
+            "protocol": 6,
+            "referer": "https://www.google.com/",
+            "sourceHostname": "",
+            "sourceIp": "192.168.179.21",
+            "sourcePort": 61770,
+            "subCategoryId": "",
+            "tag": "",
+            "time": 1517435680,
+            "upload": 0,
+            "user": "",
+            "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+        }
         assert not filter_items_with_search_query(item_one)
         assert not filter_items_with_search_query(item_two)
         assert filter_items_with_search_query(item_bing_search)
@@ -566,3 +597,91 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
         assert filter_items_with_search_query(item_google_search)
         assert filter_items_with_search_query(item_yahoo_search)
         assert filter_items_with_search_query(item_duck_duck_go_search)
+        assert filter_items_with_search_query(item_michaesearch)
+
+
+    def test_filter_item_with_viedeo_views(self):
+        item_one = {
+            'httpHost': 'pcschool.cbhs.school.nz',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': []
+        }
+        item_two = {
+            'httpHost': 'www.bing.com',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["foo bar"]
+        }
+        item_youtube_search = {
+            'httpHost': 'www.youtube.com',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["GET /results?search_query=hard+rock"]
+        }
+        item_youtube_video_view = {
+            'httpHost': 'www.youtube.com',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["GET /watch?v=hhdDY0y-j5g"]
+        }
+        item_youtube_video_view_time_select = {
+            'httpHost': 'www.youtube.com',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["GET /watch?v=hhdDY0y-j5g&feature=youtu.be&t=115"]
+        }
+        item_youtube_video_view_playlist = {
+            'httpHost': 'www.youtube.com',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["GET /watch?v=Ypkv0HeUvTc&list=PLf7fnw8RkLVda0FdsKI1Eddf0NQOLwuxe"]
+        }
+        item_youtube_video_view_playlist_next_video = {
+            'httpHost': 'www.youtube.com',
+            'hwAddress': '98:0c:82:5d:df:6a',
+            'destPort': 80,
+            'upload': 654925,
+            'download': 4203181,
+            'sourceIp': '10.103.1.36',
+            'time': '1386810101',
+            'user': 'da_user',
+            'http_request_uris': ["GET /watch?v=QUvVdTlA23w&list=PLf7fnw8RkLVda0FdsKI1Eddf0NQOLwuxe&index=2"]
+        }
+        assert not filter_item_with_viedeo_views(item_one)
+        assert not filter_item_with_viedeo_views(item_two)
+        assert not filter_item_with_viedeo_views(item_youtube_search)
+        assert filter_item_with_viedeo_views(item_youtube_video_view)
+        assert filter_item_with_viedeo_views(item_youtube_video_view_time_select)
+        assert filter_item_with_viedeo_views(item_youtube_video_view_playlist)
+        assert filter_item_with_viedeo_views(item_youtube_video_view_playlist_next_video)
