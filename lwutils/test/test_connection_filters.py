@@ -571,6 +571,37 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
             "geoip_destination": "US",
             "geoip_source": "",
             "httpHost": "www.google.com",
+            "http_request_uris": ["GET /search?client=psy-ab&hl=en-NZ&gs_rn=64&gs_ri=psy-ab&pq=sex&cp=4&gs_id=v&q=test&xhr=t HTTP/1.1"],
+            "hwAddress": "-",
+            "inputDev": "",
+            "lifetime": 0,
+            "noise": True,
+            "outputDev": "",
+            "packets": 3,
+            "protocol": 6,
+            "referer": "https://www.google.com/",
+            "sourceHostname": "",
+            "sourceIp": "192.168.179.21",
+            "sourcePort": 61770,
+            "subCategoryId": "",
+            "tag": "",
+            "time": 1517435680,
+            "upload": 0,
+            "user": "",
+            "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+        }
+        item_michaesearch_xhr = {
+            "app_filtering_denied": False,
+            "categoryId": "",
+            "contenttype": "application/json; charset=UTF-8",
+            "destIp": "216.58.203.100",
+            "destPort": 443,
+            "download": 720,
+            "final_connection_object": True,
+            "fingerprint": "",
+            "geoip_destination": "US",
+            "geoip_source": "",
+            "httpHost": "www.google.com",
             "http_request_uris": ["GET /complete/search?client=psy-ab&hl=en-NZ&gs_rn=64&gs_ri=psy-ab&pq=sex&cp=4&gs_id=v&q=test&xhr=t HTTP/1.1"],
             "hwAddress": "-",
             "inputDev": "",
@@ -598,6 +629,7 @@ class TestUpdateAnalyticsFilter(unittest.TestCase):
         assert filter_items_with_search_query(item_yahoo_search)
         assert filter_items_with_search_query(item_duck_duck_go_search)
         assert filter_items_with_search_query(item_michaesearch)
+        assert not filter_items_with_search_query(item_michaesearch_xhr)
 
 
     def test_filter_item_with_video_views(self):
