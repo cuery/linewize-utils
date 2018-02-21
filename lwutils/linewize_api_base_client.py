@@ -191,6 +191,64 @@ class LinewizeApiClient(object):
         except:
             return False
 
+    def analytics_post_query(self, url, data, filter_user=None, filter_group=None, filter_period=None, filter_category=None, filter_mac=None,
+                        filter_ip=None, startDate=None, endDate=None, startTime=None, endTime=None, limit=None, offset=None, search=None, event=None,
+                        include_noise=None, include_blocked_flag=False, _device_id=None, period=None, interval_start=None, interval_end=None, whitelabel=None):
+        headers = authorize_header(self._application_key_id, self._application_key_secret, {'Content-type': 'application/json', 'Accept': 'text/plain'})
+        params = {}
+        if startDate is not None:
+            params['startDate'] = datetime.strftime(startDate, '%Y-%m-%d')
+        if endDate is not None:
+            params['endDate'] = datetime.strftime(endDate, '%Y-%m-%d')
+        if startTime is not None:
+            params['startTime'] = startTime
+        if endTime is not None:
+            params['endTime'] = endTime
+        if limit is not None:
+            params["limit"] = limit
+        if offset is not None:
+            params["offset"] = offset
+        if search is not None:
+            params['search'] = search
+        if event is not None:
+            params['event'] = event
+        if filter_category is not None:
+            params['filter_category'] = filter_category
+        if filter_user is not None:
+            params['filter_user'] = filter_user
+        if filter_group is not None:
+            params['filter_group'] = filter_group
+        if filter_mac is not None:
+            params['filter_mac'] = filter_mac
+        if filter_ip is not None:
+            params['filter_ip'] = filter_ip
+        if filter_period is not None:
+            params['filter_period'] = filter_period
+        if include_noise is not None:
+            params['include_noise'] = include_noise
+        if include_blocked_flag is not None:
+            params['include_blocked_flag'] = include_blocked_flag
+        if period is not None:
+            params['period'] = period
+        if interval_start is not None:
+            params['interval_start'] = interval_start
+        if interval_end is not None:
+            params['interval_end'] = interval_end
+        if whitelabel is not None:
+            params['whitelabel'] = whitelabel
+
+        params["access_token"] = self._session_token
+        params["deviceid"] = _device_id
+
+        try:
+            r = error_handled_response(self._app_name, requests.post(
+                "{}{}".format(self._service_url, url), data=json.dumps(data), headers=headers, params=params))
+
+            json_loads = json.loads(r.text)
+            return json_loads
+        except Exception as e:
+            return False
+
     def sphirewall(self, current_device_id, ignore_missing=False):
         ret = SphirewallClient(
             ApiDispatcherTransportProvider(
