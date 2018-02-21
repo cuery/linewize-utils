@@ -68,7 +68,6 @@ def filter_items_with_search_query(item):
     if "google" in item.get("httpHost"):
         p_http_request_uris = re.compile("(?:^|.*\s)/(search|webhp).*([q|p]=).*", re.IGNORECASE)
     elif "bing" in item.get("httpHost"):
-        print item.get("http_request_uris")[0]
         p_http_request_uris = re.compile("(?:^|.*\s)/search.*([q|p]=).*", re.IGNORECASE)
     else:
         p_http_request_uris = re.compile(".*([q|p]=).*", re.IGNORECASE)
