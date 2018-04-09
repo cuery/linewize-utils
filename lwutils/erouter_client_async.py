@@ -18,7 +18,7 @@ class AsyncERouterClient:
     @gen.coroutine
     def fetch_coroutine(self, url, **kwargs):
         http_client = AsyncHTTPClient()
-        response = yield http_client.fetch(url, kwargs)
+        response = yield http_client.fetch(url, **kwargs)
         raise gen.Return(response)   
 
     @gen.coroutine
@@ -41,14 +41,15 @@ class AsyncERouterClient:
             except Exception as e:
                 print 'Error during call'       
     
-
+    @gen.coroutine
     def subscribe(self, topic_name, subscription_name, callback=None, worker_mode=False):
         if not worker_mode:
             subscription_name += "_" + str(uuid4())  # make subscription name unique for scaling
-        yield self.fetch_coroutine("%s/topic/%s/%s/subscribe" % (self.url, topic_name, subscription_name), method="POST")
-        if callback:
+        response = yield self.fetch_coroutine("%s/topic/%s/%s/subscribe" % (self.url, topic_name, subscription_name), method="POST", body="")
+        if response.code == 200 and callback:
             yield self._poll(topic_name, subscription_name, callback)
 
+    @gen.coroutine
     def publish(self, topic_name, message, retry=0):
         try:
             body = urllib.urlencode(message)
@@ -60,5 +61,6 @@ class AsyncERouterClient:
             else:
                 raise e
 
+    @gen.coroutine
     def create(self, topic_name):
         yield self.fetch_coroutine("%s/topic/%s/create" % (self.url, topic_name), method="PUT")   
