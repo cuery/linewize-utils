@@ -4,9 +4,6 @@ import urllib
 from uuid import uuid4
 from tornado.httpclient import AsyncHTTPClient
 from tornado import gen
-from tornado.ioloop import IOLoop
-from tornado.concurrent import run_on_executor
-from concurrent.futures import ThreadPoolExecutor
 
 
 class AsyncERouterClient:
