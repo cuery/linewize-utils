@@ -3,6 +3,7 @@ from lwutils.common_model import CloudUser, CloudDevice, CloudDeviceStats
 from tornado.httpclient import AsyncHTTPClient
 from tornado import gen
 
+
 def format_request_arguments(request_arguments):
     resp = ""
     for key, values in request_arguments.items():
@@ -11,11 +12,13 @@ def format_request_arguments(request_arguments):
             resp += key + "=" + value
     return resp
 
+
 @gen.coroutine
 def fetch_coroutine(url, **kwargs):
     http_client = AsyncHTTPClient()
     response = yield http_client.fetch(url, **kwargs)
-    raise gen.Return(response)  
+    raise gen.Return(response)
+
 
 class InterApplicationException(Exception):
     def __init__(self, causing_application, exception, from_url=None, to_url=None, to_status_code=None, message=None, device_id=None):
@@ -31,16 +34,20 @@ class InterApplicationException(Exception):
     def __str__(self):
         return json.dumps(self.__dict__)
 
+
 class AsyncAccountManagementPersistenceService():
 
     @staticmethod
     @gen.coroutine
     def __get_json(url, device_id=None):
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-        response = yield fetch_coroutine(url + "?deviceid=" + device_id, headers=headers)
+        if device_id:
+            url += "?deviceid=" + device_id
+        response = yield fetch_coroutine(url, headers=headers)
         if response.error:
-            raise InterApplicationException("accountmanagementpersistenceservice_client_async", response.reason, device_id=device_id, from_url=url, to_url=response.effective_url, to_status_code=response.code)
-        raise gen.Return(json.loads(response.body))        
+            raise InterApplicationException("accountmanagementpersistenceservice_client_async", response.reason,
+                                            device_id=device_id, from_url=url, to_url=response.effective_url, to_status_code=response.code)
+        raise gen.Return(json.loads(response.body))
 
     @staticmethod
     @gen.coroutine
@@ -60,7 +67,7 @@ class AsyncAccountManagementPersistenceService():
             "{}/device/{}".format(service_url, deviceid), device_id=deviceid)
         dev = CloudDevice()
         dev.load_attributes_from_dict(response["result"])
-        raise gen.Return(dev)        
+        raise gen.Return(dev)
 
     @staticmethod
     @gen.coroutine
@@ -73,4 +80,18 @@ class AsyncAccountManagementPersistenceService():
     def get_application(service_url, application_id):
         response = yield AsyncAccountManagementPersistenceService.__get_json(
             "{}/application/{}".format(service_url, application_id))
+        raise gen.Return(response.get("result"))
+
+    @staticmethod
+    @gen.coroutine
+    def get_device_stats(service_url, deviceid):
+        response = yield AsyncAccountManagementPersistenceService.__get_json("{}/device/{}/stats".format(service_url, deviceid))
+        dev_stats = CloudDeviceStats()
+        dev_stats.load_attributes_from_dict(response["result"])
+        raise gen.Return(dev_stats)
+
+    @staticmethod
+    @gen.coroutine
+    def get_account_permissions(ams_url, accountid):
+        response = yield AsyncAccountManagementPersistenceService.__get_json("{}/account/{}/permissions".format(ams_url, accountid))
         raise gen.Return(response.get("result"))
