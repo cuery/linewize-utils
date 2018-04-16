@@ -16,16 +16,25 @@ class TrafficTypeCache(object):
         return self.last_update is None or (time.time() - self.last_update) > self.expiry
 
     def __get_appindex_signature_uri(self):
-        response = requests.get(self.appindex_url)
+        response = requests.get(self.get_app_index_url())
         return json.loads(response.text)["signatures"]
 
     def __get_appindex_fingerprints_uri(self):
-        response = requests.get(self.appindex_url)
+        response = requests.get(self.get_app_index_url())
         return json.loads(response.text)["fingerprints"]
 
-    def _reload_signature_cache(self):
-        print "_reload_signature_cache() called"
+    def get_appindex_keywords(self, key):
+        response = requests.get(self.get_app_index_url() + "/keywords/category/" + key)
+        return json.loads(response.text)["category"]
 
+    def get_appindex_keyword_categories(self):
+        response = requests.get(self.get_app_index_url() + "/keywords/categories")
+        return json.loads(response.text)["categories"]
+
+    def get_app_index_url(self):
+        return self.appindex_url
+
+    def _reload_signature_cache(self):
         response = requests.get(self.__get_appindex_signature_uri())
         appindex = json.loads(response.text)
         tmp_siganture_cache = {}
@@ -38,7 +47,6 @@ class TrafficTypeCache(object):
             self.last_update = time.time()
 
     def _reload_fingerprint_cache(self):
-        print "_reload_fingerprint_cache() called"
         response = requests.get(self.__get_appindex_fingerprints_uri())
         appindex = json.loads(response.text)
         self.fingerprint_cache = {}
@@ -115,6 +123,6 @@ class TrafficTypeCache(object):
             else:
                 return "Unknown"
         except Exception as e:
-            print "Failed to load signatures form " + self.appindex_url
+            print "Failed to load signatures form " + self.get_app_index_url()
             print e
             return signature_id
