@@ -18,12 +18,12 @@ class AsyncDeviceConfigHandler():
 
     @gen.coroutine
     def engage(self):
+        yield self.update_all_devices()
         try:
-            yield self.erouter_client.subscribe("device_config_update", self.application_name, self.update_device_config_callback)
             self.logger.info('Subscribe %s to device config updates', self.application_name)
+            yield self.erouter_client.subscribe("device_config_update", self.application_name, self.update_device_config_callback)
         except:
             self.logger.exception("An error occurred while initing the event bus from %s.", (self.application_name))
-        yield self.update_all_devices()
 
     @gen.coroutine
     def update_device_config_callback(self, data):
